@@ -1,6 +1,8 @@
-# blocodetarefas
+# Bloco de Tarefas
 
-A new Flutter project.
+Simple daily note app using CRUD, made with flutter.
+Aplicativo simples de notas diárias usando CRUD, feito com flutter.
+
 
 ## Getting Started
 
