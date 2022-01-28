@@ -1,7 +1,7 @@
 # Bloco de Tarefas
 
-# Simple daily note app using CRUD, made with flutter.
-# Aplicativo simples de notas diárias usando CRUD, feito com flutter.
+- Simple daily note app using CRUD, made with flutter.
+- Aplicativo simples de notas diárias usando CRUD, feito com flutter.
 
 
 ## Getting Started
