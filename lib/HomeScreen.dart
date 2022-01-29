@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
                       fontWeight: FontWeight.bold),
                 ),
                 onPressed: () {
-                  setState(() {});
+                  Navigator.pop(context);
                 },
               ),
               TextButton(
@@ -275,6 +275,7 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: myColors[SECONDARY],
       appBar: AppBar(
+        backgroundColor: myColors[PRIMARY],
         title: Text(
           'Bloco de notas',
         ),

@@ -4,7 +4,6 @@ import 'package:blocodetarefas/HomeScreen.dart';
 
 void main() {
   runApp(MaterialApp(
-    theme: ThemeData(primaryColor: myColors[PRIMARY],),
     home: Home(),
     debugShowCheckedModeBanner: false,
   ));
