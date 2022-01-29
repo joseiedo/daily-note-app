@@ -1,7 +1,7 @@
 # Bloco de Tarefas
 
 - Simple daily note app using CRUD, made with flutter, has button if you want to write, edit, read or delete.
-- Aplicativo simples de notas diárias usando CRUD, feito com flutter. Possui botôes caso querria escrever, editar, ler ou deletar.
+- Aplicativo simples de notas diárias usando CRUD, feito com flutter. Possui botões caso querria escrever, editar, ler ou deletar.
 
 
 ## Getting Started
