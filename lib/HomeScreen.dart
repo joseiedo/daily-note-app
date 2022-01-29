@@ -17,6 +17,9 @@ const Map<String, Color> myColors = {
   SECONDARY: Color.fromRGBO(236, 240, 241, 1)
 };
 
+// ignore: unused_element
+Map<String, dynamic> _ultimaAnotacaoRemovida = Map();
+
 class Home extends StatefulWidget {
   const Home({Key key}) : super(key: key);
 
@@ -79,7 +82,9 @@ class _HomeState extends State<Home> {
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ),
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  setState(() {});
+                },
               ),
               TextButton(
                 child: Text(
@@ -154,7 +159,7 @@ class _HomeState extends State<Home> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, left: 8, right: 8),
                   child: Text(
-                    'Enquanto eu existir bagunça não haverá!',
+                    'Enquanto eu existir, bagunça não haverá!',
                     style: TextStyle(
                         fontStyle: FontStyle.italic,
                         fontSize: 14,
@@ -167,7 +172,6 @@ class _HomeState extends State<Home> {
               TextButton(
                 onPressed: () {
                   _removerAnotacao(anotacao.id);
-
                   Navigator.pop(context);
                 },
                 child: Text(
@@ -252,6 +256,14 @@ class _HomeState extends State<Home> {
     _recuperarAnotacoes();
   }
 
+  _salvarAnotacaoSnack(Anotacao ultimaAnotacaoRemovida) async {
+    Anotacao anotacao = Anotacao(ultimaAnotacaoRemovida.titulo,
+        ultimaAnotacaoRemovida.descricao, DateTime.now().toString());
+    // ignore: unused_local_variable
+    int i = await _db.salvarAnotacao(anotacao);
+    _recuperarAnotacoes();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -277,41 +289,80 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     final anotacao = _anotacoes[index];
                     return Card(
-                      child: ListTile(
-                        title: Text(anotacao.titulo),
-                        subtitle: Text(
-                            '${_formatarData(anotacao.data)} - ${anotacao.descricao}'),
-                        trailing: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            GestureDetector(
-                              onTap: () {
-                                _exibirTelaCadastro(anotacao: anotacao);
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.only(right: 0),
-                                child: Icon(Icons.edit, color: Colors.green),
-                              ),
+                      child: Dismissible(
+                        key: ObjectKey(anotacao),
+                        direction: DismissDirection.endToStart,
+                        background: Container(
+                          color: Colors.red,
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [Icon(Icons.delete, color: Colors.white)],
+                          ),
+                        ),
+                        onDismissed: (direction) {
+                          Anotacao _ultimaAnotacaoRemovida = anotacao;
+
+                          _removerAnotacao(anotacao.id);
+
+                          final snackbar = SnackBar(
+                            duration: Duration(seconds: 5),
+                            content: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.delete_sweep_sharp,
+                                  color: Colors.white,
+                                ),
+                                Text('Anotação removida!'),
+                              ],
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                _exibirTelaExclusao(anotacao: anotacao);
+                            action: SnackBarAction(
+                              label: 'Desfazer',
+                              onPressed: () {
+                                _salvarAnotacaoSnack(_ultimaAnotacaoRemovida);
                               },
-                              child: Icon(
-                                Icons.remove_circle,
-                                color: Colors.red,
-                              ),
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                _exibirAnotacao(anotacao: anotacao);
-                              },
-                              child: Icon(
-                                Icons.menu_book_sharp,
-                                color: myColors[PRIMARY],
+                          );
+                          // ignore: deprecated_member_use
+                          Scaffold.of(context).showSnackBar(snackbar);
+                        },
+                        child: ListTile(
+                          title: Text(anotacao.titulo),
+                          subtitle: Text(
+                              '${_formatarData(anotacao.data)} - ${anotacao.descricao}'),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  _exibirTelaCadastro(anotacao: anotacao);
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.only(right: 0),
+                                  child: Icon(Icons.edit, color: Colors.green),
+                                ),
                               ),
-                            )
-                          ],
+                              GestureDetector(
+                                onTap: () {
+                                  _exibirTelaExclusao(anotacao: anotacao);
+                                },
+                                child: Icon(
+                                  Icons.remove_circle,
+                                  color: Colors.red,
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  _exibirAnotacao(anotacao: anotacao);
+                                },
+                                child: Icon(
+                                  Icons.menu_book_sharp,
+                                  color: myColors[PRIMARY],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     );
