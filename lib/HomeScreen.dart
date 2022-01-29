@@ -52,6 +52,7 @@ class _HomeState extends State<Home> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
+                  maxLength: 400,
                   style: TextStyle(color: Colors.black),
                   controller: _controllerTitulo,
                   autofocus: true,
@@ -166,6 +167,7 @@ class _HomeState extends State<Home> {
               TextButton(
                 onPressed: () {
                   _removerAnotacao(anotacao.id);
+
                   Navigator.pop(context);
                 },
                 child: Text(
@@ -209,7 +211,7 @@ class _HomeState extends State<Home> {
 
     listaTemporaria = null;
 
-    print('Lista anotacoes:' + anotacoesRecuperadas.toString());
+    //print('Lista anotacoes:' + anotacoesRecuperadas.toString());
   }
 
   _salvarAtualizarAnotacao({Anotacao anotacaoSelecionada}) async {
@@ -275,53 +277,60 @@ class _HomeState extends State<Home> {
                   itemBuilder: (context, index) {
                     final anotacao = _anotacoes[index];
                     return Card(
-                        child: ListTile(
-                      title: Text(anotacao.titulo),
-                      subtitle: Text(
-                          '${_formatarData(anotacao.data)} - ${anotacao.descricao}'),
-                      trailing: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              _exibirTelaCadastro(anotacao: anotacao);
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 0),
-                              child: Icon(Icons.edit, color: Colors.green),
+                      child: ListTile(
+                        title: Text(anotacao.titulo),
+                        subtitle: Text(
+                            '${_formatarData(anotacao.data)} - ${anotacao.descricao}'),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                _exibirTelaCadastro(anotacao: anotacao);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 0),
+                                child: Icon(Icons.edit, color: Colors.green),
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _exibirTelaExclusao(anotacao: anotacao);
-                            },
-                            child: Icon(
-                              Icons.remove_circle,
-                              color: Colors.red,
+                            GestureDetector(
+                              onTap: () {
+                                _exibirTelaExclusao(anotacao: anotacao);
+                              },
+                              child: Icon(
+                                Icons.remove_circle,
+                                color: Colors.red,
+                              ),
                             ),
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              _exibirAnotacao(anotacao: anotacao);
-                            },
-                            child: Icon(
-                              Icons.menu_book_sharp,
-                              color: myColors[PRIMARY],
-                            ),
-                          )
-                        ],
+                            GestureDetector(
+                              onTap: () {
+                                _exibirAnotacao(anotacao: anotacao);
+                              },
+                              child: Icon(
+                                Icons.menu_book_sharp,
+                                color: myColors[PRIMARY],
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ));
+                    );
                   }))
         ],
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         backgroundColor: myColors[PRIMARY],
         onPressed: () {
           _exibirTelaCadastro();
         },
-        child: Icon(
-          Icons.add,
+        label: Row(
+          children: [
+            Icon(
+              Icons.add,
+            ),
+            SizedBox(width: 10),
+            Text('Adicionar anotação')
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
