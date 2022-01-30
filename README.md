@@ -1,7 +1,7 @@
 # Bloco de Tarefas
 
-- Simple daily note app using CRUD, made with flutter, has button if you want to write, edit, read or delete (having a dismissible widget too).
-- Aplicativo simples de notas diárias usando CRUD, feito com flutter. Possui botões caso querria escrever, editar, ler ou deletar(também tendo o widget dismissible).
+- Simple daily note app using CRUD and sql, made with flutter, has button if you want to write, edit, read or delete (having a dismissible widget too).
+- Aplicativo simples de notas diárias usando CRUD e sql, feito com flutter. Possui botões caso querria escrever, editar, ler ou deletar(também tendo o widget dismissible).
 
 
 ## Getting Started
